@@ -110,7 +110,9 @@ export default function JadeAnalyzer() {
           <div className="glass-panel relative flex min-h-[500px] flex-1 flex-col overflow-hidden rounded-3xl p-10 md:p-14">
             
             {/* Ambient decorative lighting */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-jade-green-dim blur-[80px] rounded-full pointer-events-none opacity-40" />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="h-64 w-64 rounded-full bg-jade-green-dim blur-[80px] opacity-40" />
+            </div>
             
             {isAnalyzing ? (
               <div className="flex-1 flex flex-col items-center justify-center gap-6 relative z-10">
