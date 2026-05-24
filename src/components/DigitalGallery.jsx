@@ -131,7 +131,12 @@ export default function DigitalGallery() {
                     <div className="absolute inset-0 bg-black/70" />
                   </div>
 
-                  <div className="absolute h-56 w-56 rounded-full blur-[70px] animate-breath" style={{ backgroundColor: exhibit.color, opacity: 0.18 }} />
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div
+                      className="h-56 w-56 rounded-full blur-[70px] animate-breath"
+                      style={{ backgroundColor: exhibit.color, opacity: 0.18 }}
+                    />
+                  </div>
 
                   <div className="relative z-10 mx-6 aspect-[4/5] w-full max-w-[340px] overflow-hidden rounded-xl border border-white/12 bg-black/35 shadow-[0_28px_80px_rgba(0,0,0,0.55)]">
                     <img
