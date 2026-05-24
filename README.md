@@ -12,8 +12,9 @@ Jade AI Studio is an AI-powered platform dedicated to exploring, analyzing, and 
 ## ✨ 核心功能 (Core Features)
 
 1. **纹样生成 (AI Pattern Generator)**
-   - 融合传统纹样（如云纹、雷纹、龙凤纹等）与玉色基调。
-   - 调用阿里云通义万相（Wanx-v1）模型，一键生成独特玉器设计。
+   - 融合传统纹样（如云纹、龙纹、谷纹、兽面纹等）、器型与玉色基调。
+   - 根据用户选择自动匹配馆藏玉器参考图，优先调用通义万相图生图/参考图生成链路，增强器型、玉质与纹饰相似度。
+   - 无参考图时保留 `wanx-v1` 文生图回退；参考图模式默认使用 `wan2.5-i2i-preview`。
    - 结合 Qwen-plus 大语言模型，自动生成优美的“纹样基因解析”，剖析设计中的文化密码与美学特征。
 
 2. **玉器解读 (AI Jade Analyzer)**
@@ -22,7 +23,8 @@ Jade AI Studio is an AI-powered platform dedicated to exploring, analyzing, and 
    - 结合 Edge-TTS 提供语音播报功能，让玉文化知识更加生动。
 
 3. **数字展廊 (Digital Gallery)**
-   - 沉浸式的数字玉器展厅，动态展示玉文化主题的设计和作品。
+   - 沉浸式的数字玉器展厅，以时间线方式展示 12 件典型玉器与参考图来源。
+   - 覆盖红山玉龙、良渚玉琮、玉璧、玉璜、玉佩、玉蝉、玉带板、如意与山水玉雕等典型门类。
 
 ## 🛠️ 技术栈 (Tech Stack)
 
@@ -34,7 +36,7 @@ Jade AI Studio is an AI-powered platform dedicated to exploring, analyzing, and 
 ### 后端 (Backend)
 - **框架:** FastAPI (Python)
 - **AI 大模型:** 
-  - [阿里云 Dashscope](https://help.aliyun.com/zh/model-studio/): `wanx-v1` (图像生成), `qwen-vl-max` (视觉理解), `qwen-plus` (文本解析)
+  - [阿里云 Dashscope](https://help.aliyun.com/zh/model-studio/): `wan2.5-i2i-preview` (参考图生成), `wanx-v1` (文生图回退), `qwen-vl-max` (视觉理解), `qwen-plus` (文本解析)
 - **语音服务:** `edge-tts` (文本转语音)
 
 ## 🚀 快速开始 (Getting Started)
@@ -46,7 +48,7 @@ cd jade-ai-studio
 ```
 
 ### 2. 后端配置与启动
-后端运行需要 Python 环境，并配置阿里云 Dashscope API Key。
+后端运行需要 Python 环境。阿里云 Dashscope API Key 可在网页顶部配置入口填写，系统会写入本地 `.env.local`；也可以手动配置环境变量。
 
 ```bash
 cd backend
@@ -56,10 +58,13 @@ python -m venv .venv
 source .venv/bin/activate  # Windows 用户使用 .venv\Scripts\activate
 
 # 安装依赖项
-pip install fastapi uvicorn dashscope edge-tts python-multipart pydantic
+pip install -r requirements.txt
 
-# 配置环境变量 (设置你的阿里云百炼 API Key)
+# 可选：手动配置环境变量 (也可在网页顶部配置入口填写)
 export DASHSCOPE_API_KEY="your-api-key-here"
+
+# 参考图生成需要较新的 dashscope SDK，确保包含 ImageGeneration 支持
+python -c "from dashscope.aigc.image_generation import ImageGeneration"
 
 # 启动后端服务
 uvicorn main:app --reload --port 8000

@@ -3,6 +3,7 @@ import Header from './components/Header'
 import PatternGenerator from './components/PatternGenerator'
 import JadeAnalyzer from './components/JadeAnalyzer'
 import DigitalGallery from './components/DigitalGallery'
+import ApiKeyConfig from './components/ApiKeyConfig'
 
 const tabs = [
   { id: 'generate', label: '纹样生成', subtitle: 'AI Pattern' },
@@ -19,6 +20,7 @@ function App() {
 
       <div className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col px-5 py-5 sm:px-8 lg:px-12">
         <Header />
+        <ApiKeyConfig />
 
         <div className="sticky top-4 z-50 mx-auto mt-6 w-full max-w-3xl">
           <nav className="glass-nav grid grid-cols-3 gap-1 rounded-full p-1.5">
