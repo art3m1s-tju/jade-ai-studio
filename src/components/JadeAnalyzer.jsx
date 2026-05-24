@@ -55,14 +55,14 @@ export default function JadeAnalyzer() {
         <div className="w-12 h-[1px] bg-jade-gold/40 mx-auto" />
       </div>
 
-      <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-16 lg:items-stretch">
         {/* Upload Zone - Left */}
-        <div className="lg:col-span-5 space-y-8">
+        <div className="lg:col-span-5 flex h-full flex-col space-y-8">
           <div
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
             onClick={() => fileInputRef.current?.click()}
-            className={`group relative h-[380px] rounded-3xl flex flex-col items-center justify-center cursor-pointer transition-all duration-500
+            className={`group relative flex min-h-[500px] flex-1 flex-col items-center justify-center rounded-3xl cursor-pointer transition-all duration-500
               border border-dashed backdrop-blur-sm
               ${imagePreview 
                 ? 'border-jade-gold/20 bg-jade-gold/5' 
@@ -106,8 +106,8 @@ export default function JadeAnalyzer() {
         </div>
 
         {/* Results Plaque - Right */}
-        <div className="lg:col-span-7">
-          <div className="glass-panel rounded-3xl p-10 md:p-14 min-h-[500px] flex flex-col relative overflow-hidden">
+        <div className="lg:col-span-7 flex h-full">
+          <div className="glass-panel relative flex min-h-[500px] flex-1 flex-col overflow-hidden rounded-3xl p-10 md:p-14">
             
             {/* Ambient decorative lighting */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-jade-green-dim blur-[80px] rounded-full pointer-events-none opacity-40" />
