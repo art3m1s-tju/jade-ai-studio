@@ -72,7 +72,7 @@ export default function ApiKeyConfig() {
               </span>
             </div>
             <p className="mt-1 text-[0.74rem] leading-5 text-jade-text-dim">
-              Key 只保存到本机被 Git 忽略的 .env.local，用于当前项目后端调用 DashScope。
+              用于驱动通义万相生成玉器图像，并调用 Qwen 系列模型完成玉器解读。
             </p>
           </div>
         </div>

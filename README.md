@@ -48,7 +48,7 @@ cd jade-ai-studio
 ```
 
 ### 2. 后端配置与启动
-后端运行需要 Python 环境。阿里云 Dashscope API Key 可在网页顶部配置入口填写，系统会写入本地 `.env.local`；也可以手动配置环境变量。
+后端运行需要 Python 环境。阿里云 Dashscope API Key 可在网页顶部配置入口填写，用于通义万相图像生成和 Qwen 系列玉器解读；系统会自动写入本地 `.env.local`，也可以手动配置环境变量。
 
 ```bash
 cd backend
@@ -82,7 +82,12 @@ npm install
 npm run dev
 ```
 
-打开浏览器访问 `http://localhost:5173` 即可体验。
+打开浏览器访问终端输出的本地地址即可体验，通常是 `http://localhost:5173`。
+
+如果本地 8000 端口已被占用，可以改用例如 `8001`，并同时设置：
+```bash
+VITE_API_TARGET=http://127.0.0.1:8001 npm run dev
+```
 
 ## 📜 声明 (Disclaimer)
 
