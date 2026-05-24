@@ -256,10 +256,10 @@ export default function PatternGenerator() {
 
         <section className="min-w-0 lg:col-span-8 lg:flex lg:h-full lg:flex-col">
           <div className="glass-panel group relative flex min-h-[360px] flex-1 overflow-hidden rounded-2xl border border-jade-border/50 sm:min-h-[560px] lg:min-h-[660px]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(212,175,55,0.1),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.055),transparent_42%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.1),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.055),transparent_42%)] pointer-events-none" />
 
             {isGenerating ? (
-              <div className="flex-1 flex flex-col items-center justify-center gap-6 relative z-10">
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-6">
                 <div className="w-16 h-16 border-t-2 border-r-2 border-jade-gold rounded-full animate-spin opacity-80" />
                 <p className="font-serif text-jade-gold/80 text-[0.9rem] tracking-[0.2em] animate-pulse">A I 雕 琢 中</p>
               </div>
