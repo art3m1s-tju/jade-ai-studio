@@ -1,6 +1,7 @@
 import io
 import base64
 import os
+import shutil
 import tempfile
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -185,7 +186,11 @@ def _call_reference_generation(req: PatternRequest):
             image_path, is_temporary = _download_reference_image(item.url, item.fallback_url)
             if is_temporary:
                 temp_files.append(image_path)
-            images.append(f"file://{image_path}")
+                upload_path = image_path
+            else:
+                upload_path = _copy_reference_to_upload_temp(image_path)
+                temp_files.append(upload_path)
+            images.append(f"file://{upload_path}")
 
         result = ImageSynthesis.call(
             model=req.model or "wan2.5-i2i-preview",
@@ -310,6 +315,18 @@ def _download_reference_image(url: str, fallback_url: str = "") -> tuple[str, bo
         os.remove(path)
         raise HTTPException(status_code=500, detail="参考图下载为空")
     return path, True
+
+
+def _copy_reference_to_upload_temp(image_path: str) -> str:
+    source = Path(image_path)
+    if not source.exists():
+        raise HTTPException(status_code=500, detail=f"参考图不存在：{image_path}")
+
+    suffix = source.suffix if source.suffix else ".jpg"
+    fd, path = tempfile.mkstemp(prefix="jade-ref-upload-", suffix=suffix)
+    os.close(fd)
+    shutil.copyfile(source, path)
+    return path
 
 
 def _local_reference_path(url: str) -> str:
