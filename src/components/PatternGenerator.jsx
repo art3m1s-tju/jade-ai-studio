@@ -11,11 +11,6 @@ import {
   pickReferences,
 } from '../data/jadeCatalog'
 
-const hideUnavailableImage = (event) => {
-  event.currentTarget.dataset.failed = 'true'
-  event.currentTarget.style.display = 'none'
-}
-
 const NEGATIVE_PROMPT = [
   'cartoon',
   'cute mascot',
@@ -79,7 +74,6 @@ export default function PatternGenerator() {
   const [geneAnalysis, setGeneAnalysis] = useState(null)
   const [error, setError] = useState('')
   const [activePreset, setActivePreset] = useState(null)
-  const [usedReferences, setUsedReferences] = useState([])
 
   const toggleItem = (item, list, setList) => {
     setList(list.includes(item) ? list.filter(i => i !== item) : [...list, item])
@@ -138,7 +132,6 @@ export default function PatternGenerator() {
     setIsGenerating(true)
     setGeneratedImage(null)
     setGeneAnalysis(null)
-    setUsedReferences(selectedReferenceImages)
 
     try {
       const res = await fetch('/api/generate-pattern', {
@@ -189,8 +182,8 @@ export default function PatternGenerator() {
       </div>
 
       <div className="grid w-full grid-cols-1 gap-5 lg:grid-cols-12 lg:items-stretch">
-        <aside className="glass-panel min-w-0 rounded-2xl p-5 sm:p-6 lg:col-span-4">
-          <div className="space-y-6">
+        <aside className="glass-panel min-w-0 rounded-2xl p-5 sm:p-6 lg:col-span-4 lg:h-full">
+          <div className="flex h-full flex-col space-y-6">
             <section>
               <h3 className="mb-3 text-[0.7rem] uppercase tracking-[0.18em] text-jade-gold/80">高相似参考预设</h3>
               <div className="flex flex-wrap gap-2.5">
@@ -244,41 +237,6 @@ export default function PatternGenerator() {
               </div>
             </section>
 
-            <section className="border-t border-jade-border/40 pt-6">
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <h3 className="text-[0.7rem] uppercase tracking-[0.18em] text-jade-gold/80">自动参考图</h3>
-                <span className="rounded-full border border-jade-border/50 px-2.5 py-1 text-[0.62rem] tracking-[0.14em] text-jade-text-dim">
-                  {selectedReferenceImages.length ? `${selectedReferenceImages.length} 图` : '待选择'}
-                </span>
-              </div>
-              <div className="grid grid-cols-3 gap-2.5">
-                {selectedReferenceImages.length ? selectedReferenceImages.map((item) => (
-                  <a
-                    key={item.id}
-                    href={item.source}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group overflow-hidden rounded-xl border border-jade-border/45 bg-black/24"
-                    title={item.title}
-                  >
-                    <div className="aspect-square bg-black/30">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        onError={hideUnavailableImage}
-                        className="h-full w-full object-cover opacity-80 transition group-hover:scale-105 group-hover:opacity-100"
-                      />
-                    </div>
-                    <p className="truncate px-2 py-2 text-[0.66rem] text-jade-text-dim group-hover:text-jade-gold">{item.title}</p>
-                  </a>
-                )) : (
-                  <div className="col-span-3 rounded-xl border border-dashed border-jade-border/50 bg-black/16 p-4 text-center text-[0.74rem] leading-6 text-jade-text-dim">
-                    选择器型、纹饰或玉质后，系统会自动匹配馆藏参考图；网络图不可用时使用本地兜底素材继续生成。
-                  </div>
-                )}
-              </div>
-            </section>
-
             <section className="pt-1">
             <button
               onClick={handleGenerate}
@@ -296,8 +254,8 @@ export default function PatternGenerator() {
           </div>
         </aside>
 
-        <section className="min-w-0 lg:col-span-8">
-          <div className="glass-panel group relative flex min-h-[360px] overflow-hidden rounded-2xl border border-jade-border/50 sm:min-h-[560px] lg:min-h-[660px]">
+        <section className="min-w-0 lg:col-span-8 lg:flex lg:h-full lg:flex-col">
+          <div className="glass-panel group relative flex min-h-[360px] flex-1 overflow-hidden rounded-2xl border border-jade-border/50 sm:min-h-[560px] lg:min-h-[660px]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(212,175,55,0.1),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.055),transparent_42%)] pointer-events-none" />
 
             {isGenerating ? (
@@ -348,31 +306,6 @@ export default function PatternGenerator() {
               </div>
             )}
           </div>
-
-          {usedReferences.length > 0 && generatedImage && (
-            <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              {usedReferences.map((item) => (
-                <a
-                  key={item.id}
-                  href={item.source}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-3 rounded-xl border border-jade-border/45 bg-white/[0.035] p-3 text-jade-text-dim transition hover:border-jade-gold/45 hover:text-jade-text-bright"
-                >
-                  <img
-                    src={item.image}
-                    alt=""
-                    onError={hideUnavailableImage}
-                    className="h-12 w-12 rounded-lg object-cover"
-                  />
-                  <span className="min-w-0">
-                    <span className="block truncate text-[0.76rem]">{item.title}</span>
-                    <span className="mt-1 block text-[0.62rem] uppercase tracking-[0.16em] text-jade-gold/55">reference</span>
-                  </span>
-                </a>
-              ))}
-            </div>
-          )}
 
           {geneAnalysis && (
             <div className="mt-8 pt-8 border-t border-jade-border/40 animate-fade-in-up">

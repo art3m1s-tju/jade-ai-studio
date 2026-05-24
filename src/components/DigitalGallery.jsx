@@ -199,25 +199,6 @@ export default function DigitalGallery() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-12">
-        {EXHIBITS.map((item, idx) => (
-          <button
-            key={item.id}
-            onClick={() => selectExhibit(idx)}
-            aria-current={idx === activeIndex ? 'true' : undefined}
-            className={`group rounded-xl border p-3 text-left transition-all cursor-pointer
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-jade-gold/70 focus-visible:ring-offset-2 focus-visible:ring-offset-jade-bg
-              ${idx === activeIndex
-                ? 'border-jade-gold/60 bg-jade-gold/12 text-jade-text-bright'
-                : 'border-jade-border/45 bg-white/[0.035] text-jade-text-dim hover:border-jade-gold/35 hover:text-jade-text-bright'
-              }`}
-          >
-            <span className="block text-[0.6rem] uppercase tracking-[0.18em] text-jade-gold/60">{String(item.id).padStart(2, '0')}</span>
-            <span className="mt-2 block truncate text-[0.8rem]">{item.name.replace(/\s/g, '')}</span>
-            <span className="mt-1 block truncate text-[0.68rem] text-jade-text-dim/70">{item.era}</span>
-          </button>
-        ))}
-      </div>
     </div>
   )
 }
